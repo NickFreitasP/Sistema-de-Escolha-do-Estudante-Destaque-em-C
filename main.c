@@ -273,6 +273,38 @@ int verificarEmpateDestaque(Estudante estudantes[], int quantidade, float maiorI
 
 }
 
+
+/**
+* Calcula a média geral dos índices de todos os estudantes cadastrados.
+*
+* A média deve considerar o índice de todos os estudantes
+* armazenados no vetor, independentemente de serem aptos ou não
+* ao destaque.
+*
+* Fórmula:
+*
+* media = somaIndices / quantidadeEstudantes
+*
+* @param estudantes Vetor contendo os dados dos estudantes.
+* @param quantidade Quantidade de estudantes armazenados no vetor.
+*
+* @return Média geral dos índices dos estudantes.
+*/
+float calcularMediaIndices(Estudante estudantes[], int quantidade){
+
+   float soma;
+
+   for(int i = 0 ; i < quantidade ; i++)
+   {
+
+        soma = soma + estudantes[i].indice;
+   }
+
+    return soma/quantidade;
+}
+
+
+
 /**
 * Exibe o relatório final do programa.
 * O relatório deve apresentar os dados dos estudantes, seus índices,
