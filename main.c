@@ -80,6 +80,31 @@ float calcularIndice(float notaTCC, float mediaDisciplinas){
 
 }
 
+/**
+* Verifica se o estudante está apto a concorrer ao destaque.
+* Um estudante é apto quando sua nota de TCC é maior ou igual à média
+* das demais disciplinas.
+*
+* @param notaTCC Nota do Trabalho de Conclusão de Curso.
+* @param mediaDisciplinas Média das demais disciplinas.
+* @return 1 se o estudante estiver apto; 0 caso contrário.
+*/
+int verificarAptoDestaque(float notaTCC, float mediaDisciplinas){
+
+  if( notaTCC  >= mediaDisciplinas ){
+
+     return 1;
+  }
+  else{
+
+    return 0;
+
+  }
+
+
+}
+
+
 
 int main()
 {
