@@ -1,6 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+
+typedef struct Estudante
+{
+
+ char nome[50];
+ float notaTCC;
+ float mediaDisciplinas;
+ float indice;
+ int aptoDestaque;
+ int faixaIndice;
+
+}
+
 /**
 * Solicita e valida a quantidade de estudantes a serem cadastrados.
 * A função deve aceitar apenas valores entre 1 e MAX_ESTUDANTES.
@@ -182,12 +196,7 @@ void cadastrarEstudantes(Estudante estudantes[], int quantidade, int resumoIndic
           printf("\nMédias das Disciplinas :");
           estudantes[i].mediaDisciplinas = lerNotaValida();
 
-    }
-
-    // CALCULO DO INDICE / VERIFICA SE O ESTUDANTE ESTA APTO OU NÃO
-    for(int i = 0 ; i < quantidade ; i++ ){
-
-         //  CALCULO DO INDICE ARMAZENAMENTO DO INDICE DENTRO DO STRUCT
+         // CALCULO DO INDICE ARMAZENAMENTO DO INDICE DENTRO DO STRUCT
          estudantes[i].indice = calcularIndice(estudantes[i].notaTCC,estudantes[i].mediaDisciplinas);
 
          // VERIFICA SE O ESTUDANTE ESTÁ APTO / ARMAZENA A CONDIÇÃO DE APTO DENTRO DO STRUCT
@@ -208,17 +217,40 @@ void cadastrarEstudantes(Estudante estudantes[], int quantidade, int resumoIndic
 
     }
 
+}
+
+/**
+* Encontra a posição do estudante destaque no vetor.
+* A função deve considerar apenas estudantes aptos.
+* Deve retornar a posição do estudante apto com maior índice.
+* Se nenhum estudante estiver apto, deve retornar -1.
+*
+* @param estudantes Vetor de estudantes cadastrados.
+* @param quantidade Quantidade de estudantes cadastrados.
+* @return Índice do vetor onde está o estudante destaque ou -1.
+*/
+int encontrarIndiceDestaque(Estudante estudantes[], int quantidade){
+
+  int indiceVetor = -1;
+
+  for(int i = 0 ; i < quantidade ; i++ ){
+
+     if(i == 0 && estudantes[i].aptoDestaque == 1){
+
+         indiceVetor = i ;
+     }
+     else( estudantes[i].aptoDestaque == 1 && estudantes[i].indice > estudantes[i-1].indice ){
+        indiceVetor = i ;
+     }
+
+     return indiceVetor;
+  }
+
+
 
 
 }
-typedef struct Estudante {
- char nome[50];
- float notaTCC;
- float mediaDisciplinas;
- float indice;
- int aptoDestaque;
- int faixaIndice;
-}
+
 int main()
 {
     // DECLARAÇÃO DA CONSTANTE NÚMERO MÁXIMO DE ESTUDANTES CADASTRADOS
