@@ -13,7 +13,7 @@ typedef struct Estudante
  int aptoDestaque;
  int faixaIndice;
 
-}
+};
 
 /**
 * Solicita e valida a quantidade de estudantes a serem cadastrados.
@@ -181,11 +181,11 @@ void cadastrarEstudantes(Estudante estudantes[], int quantidade, int resumoIndic
 
     for(int i = 0 ; i < quantidade ; i++ ){
 
-          printf("Cadastro de Estudantes \n");
+          printf("Cadastro do Estudante %d\n", i+1);
 
           // ARMAZENA O NOME DO ESTUDANTE
           printf("Nome:");
-          scanf("%s",estudantes[i].nome);
+          scanf(" %49[^\n]"), estudantes[i].nome);
 
           // ARMAZENA A NOTA DO TCC
           printf("\nNota do TCC :");
@@ -220,36 +220,59 @@ void cadastrarEstudantes(Estudante estudantes[], int quantidade, int resumoIndic
 }
 
 /**
-* Encontra a posição do estudante destaque no vetor.
-* A função deve considerar apenas estudantes aptos.
-* Deve retornar a posição do estudante apto com maior índice.
-* Se nenhum estudante estiver apto, deve retornar -1.
+ * Encontra a posição do estudante destaque no vetor.
+ * A função deve considerar apenas estudantes aptos.
+ * Deve retornar a posição do estudante apto com maior índice.
+ * Se nenhum estudante estiver apto, deve retornar -1.
+ */
+int encontrarIndiceDestaque(Estudante estudantes[], int quantidade)
+{
+    int posicaoDestaque = -1;
+
+    float maiorIndice = -1.0;
+
+    for(int i = 0; i < quantidade; i++)
+    {
+        if(estudantes[i].aptoDestaque == 1)
+        {
+            if(posicaoDestaque == -1 || estudantes[i].indice > maiorIndice)
+            {
+                maiorIndice = estudantes[i].indice;
+                posicaoDestaque = i;
+            }
+        }
+    }
+
+    return posicaoDestaque;
+}
+
+/**
+* Verifica se existe empate entre estudantes aptos com o maior índice.
+* A função deve contar quantos estudantes aptos possuem índice igual
+* ao maior índice encontrado.
 *
 * @param estudantes Vetor de estudantes cadastrados.
 * @param quantidade Quantidade de estudantes cadastrados.
-* @return Índice do vetor onde está o estudante destaque ou -1.
+* @param maiorIndice Maior índice encontrado entre os estudantes aptos.
+* @return 1 se houver empate; 0 caso contrário.
 */
-int encontrarIndiceDestaque(Estudante estudantes[], int quantidade){
+int verificarEmpateDestaque(Estudante estudantes[], int quantidade, float maiorIndice){
 
-  int indiceVetor = -1;
+   int contador = 0;
 
-  for(int i = 0 ; i < quantidade ; i++ ){
+   for(int i = 0 ; i < quantidade ; i++){
 
-     if(i == 0 && estudantes[i].aptoDestaque == 1){
+        if(estudantes[i].aptoDestaque == 1 && maiorIndice == estudantes[i].indice ){
 
-         indiceVetor = i ;
-     }
-     else( estudantes[i].aptoDestaque == 1 && estudantes[i].indice > estudantes[i-1].indice ){
-        indiceVetor = i ;
-     }
+            contador++;
+        }
+   }
 
-     return indiceVetor;
-  }
-
-
+  return (contador >= 2) ? 1 : 0;
 
 
 }
+
 
 int main()
 {
