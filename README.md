@@ -347,30 +347,6 @@ Gera o relatório final do sistema.
 
 ---
 
-## Como Compilar
-
-### GCC
-
-```bash
-gcc main.c -o programa
-```
-
-### Executar
-
-Linux:
-
-```bash
-./programa
-```
-
-Windows:
-
-```bash
-programa.exe
-```
-
----
-
 ## Conceitos Aplicados
 
 * Variáveis e constantes
