@@ -19,7 +19,7 @@ int lerQuantidadeEstudantes(int max_estudantes)
 
     while(valido == 0)
     {
-        printf("Digite a quantidade de estudantes a serem cadastrados: ");
+
         scanf("%d", &quantidadeEstudantes);
 
         if(quantidadeEstudantes >= 1 && quantidadeEstudantes <= max_estudantes)
@@ -36,19 +36,42 @@ int lerQuantidadeEstudantes(int max_estudantes)
 }
 
 
+/**
+* Solicita e valida uma nota acadêmica.
+* A nota deve estar no intervalo de 0 a 10.
+* Caso o usuário informe valor inválido, deve solicitar novamente.
+*
+* @return Nota válida informada pelo usuário.
+*/
+float lerNotaValida()
+{
+    float nota;
+
+    int valido = 0;
+
+    while(valido == 0)
+    {
+        scanf("%f", &nota);
+
+        if(nota >= 0 && nota <= 10)
+        {
+            valido = 1;
+        }
+        else
+        {
+            printf("Nota invalida! Digite um valor entre 0 e 10: ");
+        }
+    }
+
+    return nota;
+}
+
+
 int main()
 {
     // DECLARAÇÃO DA CONSTANTE NÚMERO MÁXIMO DE ESTUDANTES CADASTRADOS
     const int MAX_ESTUDANTES = 30;
 
-    // DEFINIÇÃO DA VÁRIAVEL QUE ARMAZENA A QUANTIDADE DE ESTUDANTES
-    int quantidadeEstudantes;
-
-    // CHAMADA DA FUNÇÃO QUANTIDADE DE ESTUDANTES E ARMAZENAMENTO DENTRO DA VÁRIAVEL
-    quantidadeEstudantes = lerQuantidadeEstudantes(MAX_ESTUDANTES);
-
-
-    printf("Quantidade: %d\n", quantidadeEstudantes);
 
     return 0;
 }
