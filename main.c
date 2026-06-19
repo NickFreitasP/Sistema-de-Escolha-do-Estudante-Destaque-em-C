@@ -101,7 +101,36 @@ int verificarAptoDestaque(float notaTCC, float mediaDisciplinas){
 
   }
 
+}
 
+/**
+* Classifica o índice calculado em uma faixa numérica.
+* Código 1: índice baixo, de 0,00 a 5,99.
+* Código 2: índice médio, de 6,00 a 7,49.
+* Código 3: índice alto, de 7,50 a 8,99.
+* Código 4: índice excelente, de 9,00 a 10,00.
+*
+* @param indice Índice calculado do estudante.
+* @return Código da faixa de índice.
+*/
+int classificarIndice(float indice)
+{
+    if(indice < 6.0)
+    {
+        return 1;
+    }
+    else if(indice < 7.5)
+    {
+        return 2;
+    }
+    else if(indice < 9.0)
+    {
+        return 3;
+    }
+    else
+    {
+        return 4;
+    }
 }
 
 
