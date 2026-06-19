@@ -66,6 +66,20 @@ float lerNotaValida()
     return nota;
 }
 
+/**
+* Calcula o índice do estudante usando média ponderada.
+* A nota de TCC tem peso 40% e a média das disciplinas tem peso 60%.
+*
+* @param notaTCC Nota do Trabalho de Conclusão de Curso.
+* @param mediaDisciplinas Média das demais disciplinas.
+* @return Índice calculado do estudante.
+*/
+float calcularIndice(float notaTCC, float mediaDisciplinas){
+
+   return ( notaTCC * 0.4 ) + ( mediaDisciplinas * 0.6) ;
+
+}
+
 
 int main()
 {
