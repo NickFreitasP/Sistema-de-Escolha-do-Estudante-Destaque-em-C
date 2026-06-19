@@ -134,6 +134,24 @@ int classificarIndice(float indice)
 }
 
 
+/**
+* Inicializa a matriz de resumo dos índices.
+* A coluna 0 deve armazenar os códigos das faixas.
+* A coluna 1 deve iniciar com zero, representando a quantidade
+* de estudantes em cada faixa.
+*
+* @param resumoIndices Matriz 4x2 de resumo por faixa de índice.
+*/
+void inicializarResumoIndices(int resumoIndices[4][2])
+{
+    int i;
+
+    for(i = 0; i < 4; i++)
+    {
+        resumoIndices[i][0] = i + 1;
+        resumoIndices[i][1] = 0;
+    }
+}
 
 int main()
 {
