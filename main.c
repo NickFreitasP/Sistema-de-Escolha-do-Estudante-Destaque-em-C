@@ -153,6 +153,72 @@ void inicializarResumoIndices(int resumoIndices[4][2])
     }
 }
 
+/**
+* Realiza o cadastro dos estudantes.
+* Para cada estudante, deve ler nome, nota de TCC e média das disciplinas.
+* Também deve calcular o índice, verificar se o estudante está apto,
+* classificar o índice e atualizar a matriz de resumo.
+*
+* @param estudantes Vetor de estudantes que será preenchido.
+* @param quantidade Quantidade de estudantes a cadastrar.
+* @param resumoIndices Matriz de resumo por faixa de índice.
+*/
+void cadastrarEstudantes(Estudante estudantes[], int quantidade, int resumoIndices[4][2]){
+
+    for(int i = 0 ; i < quantidade ; i++ ){
+
+          printf("Cadastro de Estudantes \n");
+
+          // ARMAZENA O NOME DO ESTUDANTE
+          printf("Nome:");
+          scanf("%s",estudantes[i].nome);
+
+          // ARMAZENA A NOTA DO TCC
+          printf("\nNota do TCC :");
+          estudantes[i].notaTCC = lerNotaValida();
+
+
+          // ARMAZENA A MEDIA DAS DISCIPLINAS
+          printf("\nMédias das Disciplinas :");
+          estudantes[i].mediaDisciplinas = lerNotaValida();
+
+    }
+
+    // CALCULO DO INDICE / VERIFICA SE O ESTUDANTE ESTA APTO OU NÃO
+    for(int i = 0 ; i < quantidade ; i++ ){
+
+         //  CALCULO DO INDICE ARMAZENAMENTO DO INDICE DENTRO DO STRUCT
+         estudantes[i].indice = calcularIndice(estudantes[i].notaTCC,estudantes[i].mediaDisciplinas);
+
+         // VERIFICA SE O ESTUDANTE ESTÁ APTO / ARMAZENA A CONDIÇÃO DE APTO DENTRO DO STRUCT
+         estudantes[i].aptoDestaque = verificarAptoDestaque(estudantes[i].notaTCC,estudantes[i].mediaDisciplinas);
+
+
+         // CLASSIFICAÇÃO DO INDICE E ARMAZENAMENTO DENTRO DO STRUCT
+         estudantes[i].faixaIndice =  classificarIndice(estudantes[i].indice);
+
+         // ATUALIZAR A MATRIZ DE RESUMO
+         for(int j = 0 ; j < 4 ; j++){
+
+            if(estudantes[i].faixaIndice == resumoIndices[j][0]){
+
+                resumoIndices[j][1]++;
+            }
+         }
+
+    }
+
+
+
+}
+typedef struct Estudante {
+ char nome[50];
+ float notaTCC;
+ float mediaDisciplinas;
+ float indice;
+ int aptoDestaque;
+ int faixaIndice;
+}
 int main()
 {
     // DECLARAÇÃO DA CONSTANTE NÚMERO MÁXIMO DE ESTUDANTES CADASTRADOS
