@@ -5,15 +5,13 @@
 
 typedef struct Estudante
 {
-
- char nome[50];
- float notaTCC;
- float mediaDisciplinas;
- float indice;
- int aptoDestaque;
- int faixaIndice;
-
-};
+    char nome[50];
+    float notaTCC;
+    float mediaDisciplinas;
+    float indice;
+    int aptoDestaque;
+    int faixaIndice;
+} Estudante;
 
 /**
 * Solicita e valida a quantidade de estudantes a serem cadastrados.
@@ -73,7 +71,7 @@ float lerNotaValida()
         }
         else
         {
-            printf("Nota invalida! Digite um valor entre 0 e 10: ");
+            printf("Nota invalida Digite um valor entre 0 e 10: ");
         }
     }
 
@@ -181,11 +179,11 @@ void cadastrarEstudantes(Estudante estudantes[], int quantidade, int resumoIndic
 
     for(int i = 0 ; i < quantidade ; i++ ){
 
-          printf("Cadastro do Estudante %d\n", i+1);
+          printf("\nCadastro do Estudante %d\n", i+1);
 
           // ARMAZENA O NOME DO ESTUDANTE
           printf("Nome:");
-          scanf(" %49[^\n]"), estudantes[i].nome);
+          scanf(" %49[^\n]", estudantes[i].nome);
 
           // ARMAZENA A NOTA DO TCC
           printf("\nNota do TCC :");
@@ -193,7 +191,7 @@ void cadastrarEstudantes(Estudante estudantes[], int quantidade, int resumoIndic
 
 
           // ARMAZENA A MEDIA DAS DISCIPLINAS
-          printf("\nMédias das Disciplinas :");
+          printf("\nMedia das Disciplinas :");
           estudantes[i].mediaDisciplinas = lerNotaValida();
 
          // CALCULO DO INDICE ARMAZENAMENTO DO INDICE DENTRO DO STRUCT
@@ -292,7 +290,7 @@ int verificarEmpateDestaque(Estudante estudantes[], int quantidade, float maiorI
 */
 float calcularMediaIndices(Estudante estudantes[], int quantidade){
 
-   float soma;
+   float soma = 0;
 
    for(int i = 0 ; i < quantidade ; i++)
    {
@@ -303,7 +301,148 @@ float calcularMediaIndices(Estudante estudantes[], int quantidade){
     return soma/quantidade;
 }
 
+/**
+* @param estudantes Vetor contendo os dados dos estudantes.
+* @param quantidade Quantidade de estudantes armazenados no vetor.
+*
+* @return Menor índice encontrado.
+*/
+float encontrarMenorIndice(Estudante estudantes[], int quantidade)
+{
+    float menorIndice = 10.0;
 
+    for(int i = 0; i < quantidade; i++)
+    {
+        if(estudantes[i].indice < menorIndice)
+        {
+            menorIndice = estudantes[i].indice;
+        }
+    }
+
+    return menorIndice;
+}
+
+/**
+* Conta quantos estudantes estão aptos a concorrer ao destaque.
+*
+* Um estudante é considerado apto quando atende às regras
+* estabelecidas pelo trabalho e possui o campo aptoDestaque
+* configurado como verdadeiro.
+*
+* @param estudantes Vetor contendo os dados dos estudantes.
+* @param quantidade Quantidade de estudantes armazenados no vetor.
+*
+* @return Quantidade de estudantes aptos ao destaque.
+*/
+int contarEstudantesAptos(Estudante estudantes[], int quantidade){
+
+   int contador = 0;
+
+   for(int i = 0 ; i < quantidade ; i++){
+
+     if(estudantes[i].aptoDestaque == 1 ){
+        contador++;
+     }
+   }
+
+    return contador;
+}
+
+/**
+* Conta quantos estudantes não estão aptos a concorrer ao destaque.
+*
+* Um estudante é considerado não apto quando não atende às regras
+* estabelecidas pelo trabalho e possui o campo aptoDestaque
+* configurado como falso.
+*
+* @param estudantes Vetor contendo os dados dos estudantes.
+* @param quantidade Quantidade de estudantes armazenados no vetor.
+*
+* @return Quantidade de estudantes não aptos ao destaque.
+*/
+int contarEstudantesNaoAptos(Estudante estudantes[], int quantidade){
+
+
+   int contador = 0;
+
+   for(int i = 0 ; i < quantidade ; i++){
+
+     if(estudantes[i].aptoDestaque == 0 ){
+        contador++;
+     }
+   }
+
+    return contador;
+}
+
+/**
+* Exibe o ranking dos três melhores estudantes aptos ao destaque.
+*
+* @param estudantes Vetor contendo os dados dos estudantes.
+* @param quantidade Quantidade de estudantes armazenados no vetor.
+*/
+void exibirRankingTresMelhores(Estudante estudantes[], int quantidade){
+
+     int primeiro =  -1;
+     int segundo  =  -1;
+     int terceiro =  -1;
+
+     for(int i = 0 ; i < quantidade ; i++){
+
+         if(estudantes[i].aptoDestaque == 0 ){
+            continue;
+         }
+
+         if( primeiro == -1 || estudantes[i].indice > estudantes[primeiro].indice ){
+
+            terceiro = segundo;
+            segundo = primeiro;
+            primeiro = i;
+         }
+
+
+         else if( segundo == -1 || estudantes[i].indice > estudantes[segundo].indice){
+
+             terceiro = segundo;
+             segundo = i;
+
+
+         }
+
+         else if( terceiro == -1 || estudantes[i].indice > estudantes[terceiro].indice ){
+
+             terceiro = i;
+
+          }
+
+     }
+
+     printf("\nRANKING DOS TRES MELHORES\n");
+
+     if(primeiro != -1){
+
+        printf("1 Lugar: %s - %.2f\n",
+        estudantes[primeiro].nome,
+        estudantes[primeiro].indice);
+     }
+
+     if(segundo != -1)
+     {
+        printf("2 Lugar: %s - %.2f\n",
+        estudantes[segundo].nome,
+        estudantes[segundo].indice);
+     }
+
+     if(terceiro != -1)
+     {
+        printf("3 Lugar: %s - %.2f\n",
+        estudantes[terceiro].nome,
+        estudantes[terceiro].indice);
+     }
+
+
+
+}
 
 /**
 * Exibe o relatório final do programa.
@@ -317,32 +456,32 @@ float calcularMediaIndices(Estudante estudantes[], int quantidade){
 */
 void exibirRelatorio(Estudante estudantes[], int quantidade, int resumoIndices[4][2]){
 
-    printf("\n");
-    printf("============================================================\n");
-    printf("                RELATÓRIO DOS ESTUDANTES\n"                    );
-    printf("============================================================\n\n");
+
+
+    printf("RELATORIO DOS ESTUDANTES\n");
+
 
    for(int i = 0  ; i < quantidade ; i++){
 
       printf("Nome: %s\n",estudantes[i].nome);
-      printf("Nota de TCC: %f\n",estudantes[i].notaTCC);
-      printf("Média das disciplinas: %f\n",estudantes[i].mediaDisciplinas);
-      printf("Índice: %f\n",estudantes[i].indice);
+      printf("Nota de TCC: %.2f\n",estudantes[i].notaTCC);
+      printf("Media das disciplinas: %.2f\n",estudantes[i].mediaDisciplinas);
+      printf("Indice: %.2f\n",estudantes[i].indice);
 
 
       if(estudantes[i].aptoDestaque == 1)
-            printf("Situação: apto\n\n");
+            printf("Situacao: apto\n\n");
       else
-            printf("Situação: não apto\n\n");
+            printf("Situacao: não apto\n\n");
 
 
    }
 
-    printf("Resumo por faixa de índice: \n");
-    printf("Índice baixo: %d\n",resumoIndices[0][1]);
-    printf("ndice médio: %d\n",resumoIndices[1][1]);
-    printf("Índice alto: %d\n",resumoIndices[2][1]);
-    printf("Índice excelente: %d\n",resumoIndices[3][1]);
+    printf("Resumo por faixa de indice: \n");
+    printf("Indice baixo: %d\n",resumoIndices[0][1]);
+    printf("Indice medio: %d\n",resumoIndices[1][1]);
+    printf("Indice alto: %d\n",resumoIndices[2][1]);
+    printf("Indice excelente: %d\n",resumoIndices[3][1]);
 
 
     int posicaoDestaque = encontrarIndiceDestaque(estudantes, quantidade);
@@ -351,7 +490,7 @@ void exibirRelatorio(Estudante estudantes[], int quantidade, int resumoIndices[4
 
     if(posicaoDestaque == -1)
     {
-        printf("Nenhum estudante está apto a ser destaque.\n");
+        printf("Nenhum estudante esta apto a ser destaque.\n");
     }
     else
     {
@@ -359,7 +498,7 @@ void exibirRelatorio(Estudante estudantes[], int quantidade, int resumoIndices[4
 
         if(verificarEmpateDestaque(estudantes, quantidade, maiorIndice) == 1)
         {
-            printf("empate\n");
+            printf("Empate\n");
         }
         else
         {
@@ -367,16 +506,38 @@ void exibirRelatorio(Estudante estudantes[], int quantidade, int resumoIndices[4
         }
     }
 
+    printf("\nEstatisticas Gerais:\n");
+    printf("Media geral dos indices: %.2f\n", calcularMediaIndices(estudantes, quantidade));
+    printf("Menor indice: %.2f\n", encontrarMenorIndice(estudantes, quantidade));
+    printf("Estudantes aptos: %d\n", contarEstudantesAptos(estudantes, quantidade));
+    printf("Estudantes nao aptos: %d\n", contarEstudantesNaoAptos(estudantes, quantidade));
+
 
 }
 
 
-
 int main()
 {
-    // DECLARAÇÃO DA CONSTANTE NÚMERO MÁXIMO DE ESTUDANTES CADASTRADOS
-    const int MAX_ESTUDANTES = 30;
+ const int MAX_ESTUDANTES = 30;
 
+  int quantidade;
 
-    return 0;
+  Estudante estudantes[MAX_ESTUDANTES];
+
+  int resumoIndices[4][2];
+
+  inicializarResumoIndices(resumoIndices);
+
+  printf("Quantidade de estudantes: ");
+
+  quantidade = lerQuantidadeEstudantes(MAX_ESTUDANTES);
+
+  cadastrarEstudantes(estudantes, quantidade, resumoIndices);
+
+  exibirRelatorio(estudantes, quantidade, resumoIndices);
+
+  exibirRankingTresMelhores(estudantes, quantidade);
+
+   system("pause");
+
 }
