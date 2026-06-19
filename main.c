@@ -273,6 +273,72 @@ int verificarEmpateDestaque(Estudante estudantes[], int quantidade, float maiorI
 
 }
 
+/**
+* Exibe o relatório final do programa.
+* O relatório deve apresentar os dados dos estudantes, seus índices,
+* suas situações de aptidão, o resumo da matriz por faixa de índice
+* e o resultado final da escolha do estudante destaque.
+*
+* @param estudantes Vetor de estudantes cadastrados.
+* @param quantidade Quantidade de estudantes cadastrados.
+* @param resumoIndices Matriz de resumo por faixa de índice.
+*/
+void exibirRelatorio(Estudante estudantes[], int quantidade, int resumoIndices[4][2]){
+
+    printf("\n");
+    printf("============================================================\n");
+    printf("                RELATÓRIO DOS ESTUDANTES\n"                    );
+    printf("============================================================\n\n");
+
+   for(int i = 0  ; i < quantidade ; i++){
+
+      printf("Nome: %s\n",estudantes[i].nome);
+      printf("Nota de TCC: %f\n",estudantes[i].notaTCC);
+      printf("Média das disciplinas: %f\n",estudantes[i].mediaDisciplinas);
+      printf("Índice: %f\n",estudantes[i].indice);
+
+
+      if(estudantes[i].aptoDestaque == 1)
+            printf("Situação: apto\n\n");
+      else
+            printf("Situação: não apto\n\n");
+
+
+   }
+
+    printf("Resumo por faixa de índice: \n");
+    printf("Índice baixo: %d\n",resumoIndices[0][1]);
+    printf("ndice médio: %d\n",resumoIndices[1][1]);
+    printf("Índice alto: %d\n",resumoIndices[2][1]);
+    printf("Índice excelente: %d\n",resumoIndices[3][1]);
+
+
+    int posicaoDestaque = encontrarIndiceDestaque(estudantes, quantidade);
+
+    printf("Resultado: ");
+
+    if(posicaoDestaque == -1)
+    {
+        printf("Nenhum estudante está apto a ser destaque.\n");
+    }
+    else
+    {
+        float maiorIndice = estudantes[posicaoDestaque].indice;
+
+        if(verificarEmpateDestaque(estudantes, quantidade, maiorIndice) == 1)
+        {
+            printf("empate\n");
+        }
+        else
+        {
+            printf("Estudante destaque: %s\n", estudantes[posicaoDestaque].nome);
+        }
+    }
+
+
+}
+
+
 
 int main()
 {
